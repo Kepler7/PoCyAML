@@ -23,38 +23,39 @@ on:
         - DEV
         - PROD
 jobs:
-
-  completeJob:
-    if: github.event.inputs.job_name == ' '
+  
+  commerce:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    name: Complete Job
+    name: Commerce
     steps:
+        - if: github.event.inputs.job_name == 'commerce'
+        - run: echo $(date +%Y)
+        - run: echo ${{ github.ref }}
+        - run: echo ${{  env.ENVIRONMENT }}
+          env:
+            ENVIRONMENT: ${{ github.event.inputs.environment }}
+        
+        - if: github.event.inputs.job_name == ' '
         - run: echo $(date +%Y)
         - run: echo ${{ github.ref }}
         - run: echo ${{  env.ENVIRONMENT }}
           env:
             ENVIRONMENT: QA
-  
-  commerce:
-    if: github.event.inputs.job_name == 'commerce'
-    timeout-minutes: 60
-    runs-on: ubuntu-latest
-    name: Commerce
-    steps:
-        - run: echo $(date +%Y)
-        - run: echo ${{ github.ref }}
-        - run: echo ${{  env.ENVIRONMENT }}
-          env:
-            ENVIRONMENT: ${{ github.event.inputs.environment }}
   cinnamon:
-    if: github.event.inputs.job_name == 'cinnamon'
     timeout-minutes: 60
     runs-on: ubuntu-latest
     name: Cinnamon
     steps:
+        - if: github.event.inputs.job_name == 'cinnamon'
         - run: echo $(date +%Y)
         - run: echo ${{ github.ref }}
         - run: echo ${{  env.ENVIRONMENT }}
           env:
             ENVIRONMENT: ${{ github.event.inputs.environment }}
+        - if: github.event.inputs.job_name == ' '
+        - run: echo $(date +%Y)
+        - run: echo ${{ github.ref }}
+        - run: echo ${{  env.ENVIRONMENT }}
+          env:
+            ENVIRONMENT: QA
