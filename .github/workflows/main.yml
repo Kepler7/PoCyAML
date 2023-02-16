@@ -37,6 +37,7 @@ jobs:
           env:
             ENVIRONMENT: ${{ github.event.inputs.environment }}
         
+        - uses: actions/checkout@v2
         - if: github.event.inputs.job_name == ' '
         - run: echo $(date +%Y)
         - run: echo ${{ github.ref }}
@@ -55,6 +56,7 @@ jobs:
         - run: echo ${{  env.ENVIRONMENT }}
           env:
             ENVIRONMENT: ${{ github.event.inputs.environment }}
+        - uses: actions/checkout@v2
         - if: github.event.inputs.job_name == ' '
         - run: echo $(date +%Y)
         - run: echo ${{ github.ref }}
