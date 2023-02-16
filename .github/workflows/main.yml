@@ -29,6 +29,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Commerce
     steps:
+        - uses: actions/checkout@v2
         - if: github.event.inputs.job_name == 'commerce'
         - run: echo $(date +%Y)
         - run: echo ${{ github.ref }}
@@ -47,6 +48,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Cinnamon
     steps:
+        - uses: actions/checkout@v2
         - if: github.event.inputs.job_name == 'cinnamon'
         - run: echo $(date +%Y)
         - run: echo ${{ github.ref }}
