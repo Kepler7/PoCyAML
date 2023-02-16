@@ -1,0 +1,60 @@
+name: Main
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      job_name:
+        type: choice
+        description: 'Job to be run'
+        default: commerce
+        required: true
+        options:
+        - commerce
+        - cinnamon
+      environment:
+        type: choice
+        description: Select the environment
+        default: QA
+        options:
+        - QA
+        - DEV
+        - PROD
+jobs:
+
+  completeJob:
+    if: github.event.inputs.job_name == ' '
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    name: Complete Job
+    steps:
+        - run: echo $(date +%Y)
+        - run: echo ${{ github.ref }}
+        - run: echo ${{  env.ENVIRONMENT }}
+          env:
+            ENVIRONMENT: QA
+  
+  commerce:
+    if: github.event.inputs.job_name == 'commerce'
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    name: Commerce
+    steps:
+        - run: echo $(date +%Y)
+        - run: echo ${{ github.ref }}
+        - run: echo ${{  env.ENVIRONMENT }}
+          env:
+            ENVIRONMENT: ${{ github.event.inputs.environment }}
+  cinnamon:
+    if: github.event.inputs.job_name == 'cinnamon'
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    name: Cinnamon
+    steps:
+        - run: echo $(date +%Y)
+        - run: echo ${{ github.ref }}
+        - run: echo ${{  env.ENVIRONMENT }}
+          env:
+            ENVIRONMENT: ${{ github.event.inputs.environment }}
